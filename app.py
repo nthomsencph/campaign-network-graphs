@@ -35,5 +35,5 @@ style={
 })
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server() # the debug = True locally.
     
