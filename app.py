@@ -6,7 +6,9 @@ from viz import create_cast_plot
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
+
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
 
 fig = create_cast_plot()
 # iplot(fig, filename = 'campaign')
@@ -25,15 +27,10 @@ app.layout = html.Div(children=[
 style={
     'textAlign': "center",
     "margin": "0 auto",
-    # 'align': "center",
-    # 'width': "80&%",
     'color': "black",
-    # 'display': 'inline-block', 
     'width': '100%',
-    
-    
 })
 
 if __name__ == '__main__':
-    app.run_server() # the debug = True locally.
+    app.run_server(debug = True) # the debug = True locally.
     
