@@ -2,20 +2,20 @@
 import pandas as pd
 import random 
 
-def random_color(i):
+def random_color(i : int) -> str:
     random.seed(i)
     r = lambda: random.randint(0,255)
     return '#%02X%02X%02X' % ( r(), r(), r() )
 
-def import_data(sheet_name, sheet_id = "1gQ69WDBNpTIegl1pKKwLvN2KJfTRnird6_2P41_qwfo"):
+def import_data(sheet_name : str, sheet_id : str = "1gQ69WDBNpTIegl1pKKwLvN2KJfTRnird6_2P41_qwfo" ) -> pd.DataFrame:
     return pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={sheet_name}")
 
-def encode_factions_to_ints(nodes):
+def encode_factions_to_ints(nodes : pd.DataFrame) -> pd.DataFrame:
     nodes.group = pd.Categorical(nodes.group)
     nodes['group_id'] = nodes.group.cat.codes
     return nodes
 
-def add_node_sizes(nodes, links):
+def add_node_sizes(nodes : pd.DataFrame, links : pd.DataFrame) -> pd.DataFrame:
 
     sizes = links.Target.append(links.Source).value_counts()
     nodes = nodes.merge(pd.DataFrame({"Source" : sizes.index,
@@ -28,12 +28,12 @@ def add_node_sizes(nodes, links):
     nodes.Size = nodes.Size.fillna(nodes.Size.mean())
     return nodes                        
 
-def set_group_color(nodes):
+def set_group_color(nodes : pd.DataFrame) -> pd.DataFrame:
     nodes["group_color"] = nodes.group_id.apply(lambda x: random_color(x))
     return nodes
 
 
-def set_link_relation_color(links):
+def set_link_relation_color(links : pd.DataFrame) -> pd.DataFrame:
     rel_color_lookup = {"Friend" : "green", 
                         "Foe" : 'red', 
                         "Unknown" : 'blue'}
@@ -42,7 +42,7 @@ def set_link_relation_color(links):
     return links
                                                       
 
-def get_data():
+def get_data() -> tuple:
 
     links = (import_data("1435699897").pipe(set_link_relation_color)) # import links and set color
     nodes = (import_data("1157642109").pipe(encode_factions_to_ints) # import nodes and encode factions

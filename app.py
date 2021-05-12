@@ -7,8 +7,8 @@ from viz import create_cast_plot
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-server = app.server
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets) 
+server = app.server # the gunicorn (Procfile) reads this. Won't work without it.
 
 fig = create_cast_plot()
 # iplot(fig, filename = 'campaign')

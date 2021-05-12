@@ -8,7 +8,7 @@ import networkx as nx
 from prep import get_data, random_color
 
 
-def add_nodes_to_graph(graph, nodes):
+def add_nodes_to_graph(graph : object, nodes : pd.DataFrame):
     for idx, char in nodes.iterrows():
         graph.add_node(char.name,
                        size = char.Size,
@@ -18,7 +18,7 @@ def add_nodes_to_graph(graph, nodes):
                        weight = 1,
                        group = char.group) 
 
-def add_links_to_graph(graph, links, nodes):
+def add_links_to_graph(graph : object, links : pd.DataFrame, nodes : pd.DataFrame):
 
     node_lookup = dict(zip(nodes.name, nodes.index))
     
@@ -29,7 +29,7 @@ def add_links_to_graph(graph, links, nodes):
                     color = link.rel_color)
 
 
-def get_node_coordinates(graph_obj, layout):
+def get_node_coordinates(graph_obj : object, layout: object) -> tuple:
     
     Xn, Yn, Zn = [], [], []
     for k in range(graph_obj.number_of_nodes()): 
@@ -39,9 +39,8 @@ def get_node_coordinates(graph_obj, layout):
 
     return Xn, Yn, Zn
 
-def get_link_coordinates(graph_obj, nodes_df):
+def get_link_coordinates(graph_obj : object, nodes_df : pd.DataFrame) -> tuple:
     
-
     edge_x, edge_y, edge_z = [], [], []
     for edge in graph_obj.edges():
         x0, y0, z0 = nodes_df.loc[edge[0]][["Xn", "Yn", "Zn"]].values
@@ -60,7 +59,7 @@ def get_link_coordinates(graph_obj, nodes_df):
 
 
 
-def create_node_trace(node_cluster, name):
+def create_node_trace(node_cluster : pd.DataFrame, name : str) -> object:
 
     return go.Scatter3d(x = node_cluster.Xn, 
                         y = node_cluster.Yn, 
@@ -83,7 +82,7 @@ def create_node_trace(node_cluster, name):
                                         '<b>Affiliation</b>: %{customdata[1]}<br>'))
 
 
-def create_edge_trace(edge_x, edge_y, edge_z, edge_cluster, name):
+def create_edge_trace(edge_x : list, edge_y : list, edge_z : list, edge_cluster : pd.DataFrame, name : str) -> object:
     return go.Scatter3d(x = edge_x, 
                         y = edge_y, 
                         z = edge_z,
@@ -96,7 +95,7 @@ def create_edge_trace(edge_x, edge_y, edge_z, edge_cluster, name):
                         mode='lines')
 
 
-def create_graph_object(links, nodes):
+def create_graph_object(links : pd.DataFrame, nodes : pd.DataFrame) -> object:
 
     dnd = nx.Graph() # our graph object
 
