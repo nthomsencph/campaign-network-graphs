@@ -2,6 +2,14 @@
 import pandas as pd
 import random 
 
+
+REL_COLOR_LOOKUP = {
+    "Friend" : "green", 
+    "Foe" : 'red', 
+    "Unknown" : 'blue',
+    "Associate": "orange"
+    }
+
 def random_color(i : int) -> str:
     random.seed(i)
     r = lambda: random.randint(0,255)
@@ -34,11 +42,9 @@ def set_group_color(nodes : pd.DataFrame) -> pd.DataFrame:
 
 
 def set_link_relation_color(links : pd.DataFrame) -> pd.DataFrame:
-    rel_color_lookup = {"Friend" : "green", 
-                        "Foe" : 'red', 
-                        "Unknown" : 'blue'}
+    
                     
-    links["rel_color"] = links.Relation.apply(lambda x: rel_color_lookup[x])
+    links["rel_color"] = links.Relation.apply(lambda x: REL_COLOR_LOOKUP[x])
     return links
                                                       
 

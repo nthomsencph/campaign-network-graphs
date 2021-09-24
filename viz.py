@@ -22,7 +22,7 @@ def add_links_to_graph(graph : object, links : pd.DataFrame, nodes : pd.DataFram
 
     node_lookup = dict(zip(nodes.name, nodes.index))
     
-    for idx, link in links.iterrows(): # for each co-appearance between two characters, add an edge
+    for _, link in links.iterrows(): # for each co-appearance between two characters, add an edge
         graph.add_edge(node_lookup[link.Source], 
                     node_lookup[link.Target], 
                     weight = 1, 
