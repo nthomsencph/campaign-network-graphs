@@ -138,3 +138,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 output/campaign-cast.html
+local_storage/version_state.json
+secrets/service-account-key.json
+local_storage/writeup.md
+notebooks/3d-networkx-campaign.ipynb
